@@ -46,9 +46,40 @@ function campGenerator(numberOfCells, markupEl) {
         // rendo le caselle cliccabili
         cellElement.addEventListener('click', function(){
             console.log('Ho cliccato sulla casella');
-            cellElement.classList.toggle('active');
+            if(generateBombs) {
+                cellElement.classList.add('danger');
+            } else {
+                cellElement.classList.toggle('active')
+            };
             console.log(i);
         })
     }
 }
+
+
+
+// GENERARE BOMBE
+const bombs = generateBombs(1, cellsNumber)
+
+// Il computer deve generare 16 numeri casuali
+function generateRandomNumber(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function generateBombs(min, max) {
+  const bombs = []
+  while (bombs.length !== 16) {
+
+    
+    const bomb = generateRandomNumber(min, max)
+
+    if (!bombs.includes(bomb)) {
+      bombs.push(bomb)
+    }
+  }
+  return bombs
+}
+
+console.log(bombs);
+
 

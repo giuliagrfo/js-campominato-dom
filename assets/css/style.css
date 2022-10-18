@@ -69,3 +69,8 @@ button:hover {
 .show {
     display: block;
 }
+
+
+.danger {
+    background-color: red;
+}
