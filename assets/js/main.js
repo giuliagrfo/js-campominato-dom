@@ -22,7 +22,7 @@ const cellsNumber = 100;
 const buttonEl = document.querySelector('button');
 const titleEl = document.querySelector('.title')
 
-buttonEl.addEventListener('click', function() {
+buttonEl.addEventListener('click', function () {
     campGenerator(cellsNumber, containerEl)
     buttonEl.classList.add('none');
     titleEl.classList.add('show')
@@ -37,25 +37,38 @@ function cellGenerator(n) {
 }
 
 // utilizzare una funzione e il ciclo for per inserire tutte le celle nel markup
-function campGenerator(numberOfCells, markupEl) {
-    for(let i = 1; i <= cellsNumber; i++){
+function campGenerator(max, markupEl) {
+    let tries = 0
+    for (let i = 1; i <= cellsNumber; i++) {
         const currentCell = `${i}`;
         const cellElement = cellGenerator(currentCell);
         markupEl.insertAdjacentElement('beforeend', cellElement);
         cellGenerator(i)
         // rendo le caselle cliccabili
-        cellElement.addEventListener('click', function(){
+        cellElement.addEventListener('click', function () {
             console.log('Ho cliccato sulla casella');
-            if(generateBombs) {
-                cellElement.classList.add('danger');
+
+            if (is_bomb(i, bombs)) {
+                //bombs.includes(i) 
+                console.log('hai pestato una bomba');
+                this.style.backgroundColor = 'red'
+                this.innerText = 'BOOM!💥'
+                markupEl.innerHTML = 'Game Over! ' + 'Score: ' + tries
+
             } else {
-                cellElement.classList.toggle('active')
-            };
+                this.style.backgroundColor = 'blue'
+                tries++
+            }
+
+            if (tries == max - 16) {
+                console.log('Hai Vinto! ' + tries + ' Punti fatti!');
+                wrapperElement.innerHTML = 'Hai Vinto! ' + tries + ' Punti fatti!'
+            }
             console.log(i);
+
         })
     }
 }
-
 
 
 // GENERARE BOMBE
@@ -63,23 +76,31 @@ const bombs = generateBombs(1, cellsNumber)
 
 // Il computer deve generare 16 numeri casuali
 function generateRandomNumber(min, max) {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
+    return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 function generateBombs(min, max) {
-  const bombs = []
-  while (bombs.length !== 16) {
+    const bombs = []
+    while (bombs.length !== 16) {
 
-    
-    const bomb = generateRandomNumber(min, max)
+        const bomb = generateRandomNumber(min, max)
 
-    if (!bombs.includes(bomb)) {
-      bombs.push(bomb)
+
+        if (!bombs.includes(bomb)) {
+            bombs.push(bomb)
+        }
     }
-  }
-  return bombs
+    return bombs
 }
 
 console.log(bombs);
 
+console.log(bombs[1]);
 
+
+function is_bomb(n, list) {
+    if (list.includes(n)) {
+        return true
+    }
+    return false
+}

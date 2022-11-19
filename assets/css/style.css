@@ -17,7 +17,7 @@ body {
     position: absolute;
     left: 50%;
     top: 50%;
-    
+
 }
 
 button {
@@ -38,9 +38,11 @@ button:hover {
 
 .container {
     max-width: 1200px;
-    margin: 2rem auto;
+    margin: 10rem auto;
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
 }
 
 .cell {
@@ -64,8 +66,8 @@ button:hover {
     text-align: center;
     display: none;
     margin: 2rem 0;
-}    
-    
+}
+
 .show {
     display: block;
 }
